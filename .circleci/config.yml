@@ -8,11 +8,6 @@ jobs:
       - checkout
       - run: 
           name: Build Image
-            # We will use the short git hash to tag the image
-            # Build our image
-            # Login to dockerhub, we need to set these environment variables in
-            # the CircleCI web interface.
-            # Push to our dockerhub account
           command: |
             set -x
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
@@ -36,9 +31,10 @@ jobs:
 
 workflows:
   version: 2
-  build-and-test:
+  build_and_test:
     jobs:
       - build
       - test:
         requires:
           - build
+
