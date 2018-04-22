@@ -1,0 +1,27 @@
+version: 2.0
+jobs:
+  Build:
+    machine:
+      enabled: true
+
+    steps:
+      - checkout
+      - run: 
+          name: Build Image
+            # We will use the short git hash to tag the image
+            # Build our image
+            # Login to dockerhub, we need to set these environment variables in
+            # the CircleCI web interface.
+            # Push to our dockerhub account
+          command: |
+            set -x
+            SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
+            docker build -t moonmatt/flask-docker-demo-small:$SHORT_GIT_HASH .
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+            docker push moonmatt/flask-docker-demo-small:$SHORT_GIT_HASH
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
