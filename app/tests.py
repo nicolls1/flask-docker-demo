@@ -10,6 +10,9 @@ class FlaskrTestCase(unittest.TestCase):
         home_page = self.app.get('/')
         assert home_page.data.decode('utf-8') == 'Hello, World! This is version: 0.0.1'
 
+    def test_fail(self):
+        assert False == True
+
 if __name__ == '__main__':
     unittest.main()
 
